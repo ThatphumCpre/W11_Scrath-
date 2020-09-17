@@ -1,23 +1,40 @@
 int positionY;  //set global variable 
-float angle;    
-
+Ghost littleGhost;
 void setup(){
   size(500,500);   //set canvas size
   strokeWeight(3);
-  rectMode(CENTER);  //draw rect as center of rectangle 
-  positionY = 2*height+150;  //set start point at middle
-  angle=0;  //set start angle 
+  littleGhost = new Ghost(100, 100,100); 
 }
 
 void draw(){
   background(40);  //set gray background
-  translate(100, positionY/2);   //set center of canvas at center of square
-  rotate(angle);  //rotale -> radius from angle variable
-  rect(0,0, 100, 100);  //draw circle from positionY
-  angle += PI/80;  //update angle 
-  positionY -= 1;   //update  positionY move circle to top
-  if ( positionY<-50){  //if over the edge   then set to bottom
-    positionY=2*height+150;
-  }
+  littleGhost.draw();  //draw ghost 
+}
 
+class Ghost {
+  int positionX,positionY,size;  //set attribute 
+  float angle;  
+  Ghost(int x, int y , int sizeInput){
+    rectMode(CENTER);  //draw rect as center of rectangle 
+    positionX = x;   //collect position, size, angle
+    positionY = y; 
+    size = sizeInput;
+    angle = 0;
+  }
+  
+  
+   void draw(){
+     translate(positionX, positionY);  //set new rotate point 
+     rotate(angle);  //rotate square 
+     rect(0, 0, size, size);  //draw from new rotate point 
+     angle += PI/80; //increase angle 
+     positionY -= 1;  //update position
+     if (positionY<-size) {   //if over edge 
+       positionY = height;
+     }
+     translate(0,0); //reset 
+     rotate(0);
+   }
+    
+    
 }
